@@ -8,35 +8,23 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI)
 
+// 导入axios
+// import axios from 'axios'
+// Vue.prototype.$axios=axios;
+// axios.defaults.baseURL='http://localhost:8888/api/private/v1/'
+// 多个地方要用到,,axios抽取
 
 
-// ------------------------------------------------------------
 // 导入组件
-import login from './components/login.vue'
-import index from './components/index.vue'
+// import login from './components/login.vue'
+// import index from './components/index.vue'
 
 
 
 
-// 导入路由
-import VueRouter from 'vue-router'
-Vue.use(VueRouter)
 
-
-
-// 注册路由,(设置路由规则)
-const routes = [
-  { path: '/login', component: login },
-  { path: '/index', component: index }
-]
-
-
-// 创建路由
-const router = new VueRouter({
-  routes
-})
-
-
+// 接收 router.js 暴露出来的router变量 
+import router from './router/router'
 
 Vue.config.productionTip = false
 

@@ -11,7 +11,7 @@
         class="demo-ruleForm"
         label-position="top"
       >
-        <el-form-item label="账号" prop="userName">
+        <el-form-item label="登录账号" prop="userName">
           <el-input type="text" v-model="ruleForm.userName" autocomplete="off" ></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
@@ -26,13 +26,12 @@
 </template>
 
 <script>
+import {login} from '../api/http'
+
 export default {
   data() {
     return {
-      ruleForm: {
-        userName: "",
-        password: ""
-      },
+      ruleForm: {userName: "admin",password: "123456"},
       rules: {
         userName: [
           { required: true, message: "请输入账号", trigger: "blur" },
@@ -49,9 +48,28 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert("submit!");
+         
+          // 发送请求,,并且传的参数是一个对象
+          login(this.ruleForm).then(res=>{
+            console.log(res);
+            
+            if(res.data.meta.status==200){
+              this.$message.success({
+                message:"登录成功",
+                duration:1000
+              });
+              // 但此时我只要输入正确网址就可以进入主页,,需要注册导航守卫
+              // axios默认不带token 也不会保存和自动发送
+              // 在登录后保存token
+              window.localStorage.setItem('token',res.data.data.token)
+
+              this.$router.push('/index');
+            }else{
+               this.$message.error(res.data.meta.msg)
+            } 
+          })
         } else {
-          console.log("error submit!!");
+          // ----------------
           return false;
         }
       });

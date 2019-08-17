@@ -8,40 +8,39 @@
     <el-container>
       <el-aside width="200px" class="my-aside">
         <!-- 文档里面可以知道unique-opened是展开单独一个下拉框,  router是以index为路径跳转  -->
-        <el-menu class="el-menu-vertical-demo" :unique-opened='true' router>
-
+        <el-menu class="el-menu-vertical-demo" :unique-opened="true" router>
           <el-submenu :index="''+index" v-for="(item,index) in menuList">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>{{item.authName}}</span>
             </template>
-            <el-menu-item-group v-for="subitem in item.children">
-              <el-menu-item :index="subitem.path">{{subitem.authName}}</el-menu-item>
-            </el-menu-item-group>
-          </el-submenu>
 
+            <el-menu-item v-for="subitem in item.children" :index="subitem.path"><i class="el-icon-menu"></i>
+              {{subitem.authName}}
+            </el-menu-item>
+          </el-submenu>
         </el-menu>
       </el-aside>
-      <el-main class="my-main">Main</el-main>
+      <el-main class="my-main">
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
 
 <script>
-
-import {menus} from '../api/http'
+import { menus } from "../api/http";
 export default {
-  data(){
-    return{
-      menuList:[]
-    }
+  data() {
+    return {
+      menuList: []
+    };
   },
   created() {
-    menus().then(res=>{
+    menus().then(res => {
       console.log(res);
-      this.menuList=res.data.data
-      
-    })
+      this.menuList = res.data.data;
+    });
   },
   methods: {
     loginOut() {

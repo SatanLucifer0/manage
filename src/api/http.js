@@ -12,6 +12,28 @@ const http = axios.create({
   baseURL: 'http://localhost:8888/api/private/v1/',
 });
 
+
+
+
+
+// axios请求拦截,,拦截后给请求添加一个请求头再发送出去
+// 默认的请求拦截,给请求默认加一个Authorization的键，它的值为token
+// http.defaults.headers.common['Authorization'] = window.localStorage.getItem('token');
+
+http.interceptors.request.use(function (config) {
+
+  config.headers.Authorization=window.localStorage.getItem('token');
+
+  return config;
+}, function (error) {
+  
+  //发生错误的回调函数 
+  return Promise.reject(error);
+});
+
+
+
+
 // 3.把http暴露出去
 export default http
 
@@ -26,15 +48,42 @@ export const login = ({ userName, password }) => {
   })
 }
 
-
+// 获取左侧菜单栏
 export const menus = () => {
 
   return http.get('menus', {
-    headers: {
+    // headers: {
 
-      Authorization: window.localStorage.getItem('token')
-      
-    }
+    //   Authorization: window.localStorage.getItem('token')
+
+    // }
   })
 
 }
+
+// 请求用户数据李标
+export const users = ({query, pagenum, pagesize}) => {
+  return http.get('users', {
+    //如果get提交法额参数不是写在网址上,那么必须写在一个 params 对象里
+    params: {
+      query,
+      pagenum,
+      pagesize,
+    },
+    // headers: {
+    //   Authorization: window.localStorage.getItem('token')
+    // }
+  })
+}
+
+
+// 增加新用户
+export const addUser=({password,username,email,mobile})=>{
+    return http.post('users',{
+      password,
+      username,
+      email,
+      mobile,
+    })
+}
+

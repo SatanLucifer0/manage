@@ -19,9 +19,10 @@ Vue.use(ElementUI)
 // import login from './components/login.vue'
 // import index from './components/index.vue'
 
-
-
-
+// 导入面包屑组件
+import bread from './components/bread.vue'
+// 注册组件
+Vue.component('bread',bread)
 
 // 接收 router.js 暴露出来的router变量 
 import router from './router/router'

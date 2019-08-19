@@ -1,10 +1,6 @@
 <template>
   <div>
-    <el-breadcrumb separator-class="el-icon-arrow-right" class="my-bread">
-      <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
-    </el-breadcrumb>
+    <bread first="用户管理" second="用户列表"></bread>
 
     <el-col>
       <el-col :span="8">
@@ -129,7 +125,7 @@
         </el-form-item>
         <el-form-item label="请选择角色">
           <el-select v-model="Role.rid" placeholder="请选择角色">
-            <el-option v-for="item in roleList" :label="item.roleName" :value="item.id"></el-option>
+            <el-option v-for="item in roleList" :label="item.roleName" :value="item.id" :key="item.id"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -215,7 +211,7 @@ export default {
   methods: {
     changeRole() {
       userRole(this.Role).then(res => {
-        console.log(this.Role);
+        // console.log(this.Role);
         if (res.data.meta.status == 200) {
           this.$message.success("分配成功");
           this.ringhtFormVisible = false;
@@ -227,7 +223,7 @@ export default {
     },
     // 已经来显示当前名字
     showRole(row) {
-      console.log(row);
+      // console.log(row);
 
       this.ringhtFormVisible = true;
       this.Role.username = row.username;
@@ -273,7 +269,7 @@ export default {
     // 点击确定按钮修改信息
     editUserMessage() {
       editmessage(this.editForm).then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.data.meta.status == 200) {
           this.editFormVisible = false;
           this.$message.success("更新成功");
@@ -365,18 +361,13 @@ export default {
     this.getUsers();
     // 进入分配权限页面显示当前的角色
     getRole().then(res => {
-      console.log(res);
+      // console.log(res);
       this.roleList = res.data.data;
     });
   }
 };
 </script>
 
-<style lang="less" scoped>
-.my-bread {
-  background-color: #d3dce6;
-  height: 45px;
-  line-height: 45px;
-  padding-left: 15px;
-}
+<style>
+
 </style>

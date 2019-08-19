@@ -51,7 +51,7 @@ export default {
          
           // 发送请求,,并且传的参数是一个对象
           login(this.ruleForm).then(res=>{
-            console.log(res);
+            // console.log(res);
             
             if(res.data.meta.status==200){
               this.$message.success({
